@@ -20,7 +20,7 @@
                     "duplicateuser" => "This username is already taken, try another.",
                     "duplicateemail" => "An account with this email already exists.",
                     "duplicateboth" => "Username and email are both taken. Please choose new ones.",
-                    "passwordlength" => "Password length should be between 3 and 20 characters.",
+                    "passwordlength" => "Password length should be between 4 and 30 characters.",
                     "alphanumericonly" => "Username should be alphanumeric.",
                     "lettersonly" => "Names should contain only letters.",
                     "emailvalidation" => "Enter a valid email address, please."
