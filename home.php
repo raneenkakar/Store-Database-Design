@@ -1,3 +1,11 @@
+<?php
+session_start(); 
+
+if (!isset($_SESSION["firstName"])) {
+    header("Location: login.php"); 
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +17,7 @@
 <body>
     <div class="container">
         <header class="header">
-            <h1>🌟 Hello, <?php echo htmlspecialchars($_SESSION["firstName"]); ?>! 🌟</h1>
+            <h1>Hello,  <?php echo $_SESSION["firstName"]?>! </h1>
         </header>
         <main class="main-content">
             <p>Glad to see you in our community! You've successfully signed in.</p>

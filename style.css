@@ -1,9 +1,11 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #eaeaea;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     margin: 0;
-    padding: 0;
-    color: #333;
+    background-color: #e3f2fd; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .container {
@@ -134,7 +136,7 @@ h1 {
 .register-button {
     width: 100%;
     padding: 10px;
-    background-color: #ff7eb9;
+    background-color: #337cc5;
     color: white;
     border: none;
     border-radius: 5px;
@@ -143,7 +145,7 @@ h1 {
 }
 
 .register-button:hover {
-    background-color: #ff65a3;
+    background-color: #234dc2;
 }
 
 .login-prompt {
