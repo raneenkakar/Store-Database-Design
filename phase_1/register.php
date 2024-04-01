@@ -57,6 +57,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 }
 
 // Prepare SQL statement to check for existing username or email
+// SQL injection prevention: Use of prepared statements with bound parameters
 $stmt = $conn->prepare("SELECT username, email FROM user WHERE username = ? OR email = ?");
 $stmt->bind_param("ss", $username, $email);
 $stmt->execute();
@@ -82,6 +83,7 @@ if ($result->num_rows > 0) {
 }
 
 // Insert user data into database
+// SQL injection prevention: Use of prepared statements with bound parameters
 $stmt2 = $conn->prepare("INSERT INTO user (username, password, firstName, lastName, email) VALUES (?, ?, ?, ?, ?)");
 $stmt2->bind_param("sssss", $username, $password, $firstName, $lastName, $email);
 $stmt2->execute();
