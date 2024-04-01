@@ -1,6 +1,6 @@
 <?php
 
-require("dbconnect.php");
+require("dbconnect.php"); // Including the database connection file
 
 // Retrieve username and password from POST request
 $userInputName = $_POST["username"];
@@ -13,8 +13,9 @@ if (empty($userInputName) || empty($userInputPassword)) {
 }
 
 // Prepare a query to select user data
+// Using prepared statements to prevent SQL injection
 $query = $conn->prepare("SELECT username, password, firstName FROM user WHERE username = ?");
-$query->bind_param("s", $userInputName);
+$query->bind_param("s", $userInputName); // Binding parameters to prevent SQL injection
 $query->execute();
 $userData = $query->get_result();
 
@@ -28,6 +29,7 @@ if ($userData->num_rows == 0) {
 $userDetails = $userData->fetch_assoc();
 
 // Verify the password
+// Using password_verify for secure password comparison
 if (!password_verify($userInputPassword, $userDetails["password"])) {
     header("Location: ../index.php?error=passwordwrong");
     exit();
