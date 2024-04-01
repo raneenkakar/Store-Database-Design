@@ -29,8 +29,7 @@ if ($userData->num_rows == 0) {
 $userDetails = $userData->fetch_assoc();
 
 // Verify the password
-// Using password_verify for secure password comparison
-if (!password_verify($userInputPassword, $userDetails["password"])) {
+if ($userDetails["password"] != $userInputPassword) {
     header("Location: ../index.php?error=passwordwrong");
     exit();
 }
