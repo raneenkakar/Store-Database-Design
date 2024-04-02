@@ -14,7 +14,7 @@
 - Documented Phase 1 progress through comprehensive video recording.
 
 **Ali:**
-- 
+- N/A
 
 **Shima:**
-- 
+- N/A
