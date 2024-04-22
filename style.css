@@ -2,10 +2,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;  /* changed from height to min-height */
     margin: 0;
-    background-color: #e3f2fd; 
+    background-color: #e3f2fd;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333; /* Default text color set for consistency */
 }
 
 .container {
@@ -40,7 +41,7 @@ body {
     color: white;
     border: none;
     padding: 10px 15px;
-    border-radius: 4px;
+    border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
 }
@@ -165,3 +166,314 @@ h1 {
     color: #d9534f;
     margin-bottom: 15px;
 }
+.review-body, .review-body h2, .review-body form, .review-body textarea, .review-body select, .review-body button {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.review-body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Navigation Bar Styling for review page */
+.review-navbar {
+    background-color: #007bff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.review-navbar a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.review-navbar a:hover, .review-navbar a.active {
+    background-color: #0056b3;
+}
+
+.review-navbar form {
+    display: inline;
+}
+
+.review-button-3 {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.review-button-3:hover {
+    background-color: #c82333;
+}
+
+/* Container for main content in review page */
+
+/* Form Styling for review page */
+.reviewItem-form {
+    margin-top: 20px;
+}
+
+.reviewItem-form  {
+    display: flex;
+    justify-content: center;
+
+}
+
+.reviewItem-form textarea, .reviewItem-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+
+
+/* General styling for the seller's item listings */
+.item {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.item:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.item h3 {
+    color: #333;
+    margin-top: 0;
+}
+
+.item p {
+    color: #666;
+    line-height: 1.5;
+}
+
+/* Styling for item price */
+.item p.price {
+    color: #007bff;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Enhancements to the navigation bar */
+.navbar a.active {
+    background-color: #4a67a1;
+    color: white;
+}
+
+.navbar a {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #333;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.navbar a:hover,
+.navbar a.active {
+    background-color: #4a67a1;
+    color: white;
+}
+
+/* Button styling inside forms */
+.button-3 {
+    background-color: #dc3545;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.button-3:hover {
+    background-color: #c82333;
+}
+/* General container and alignment styles */
+.container-main {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    overflow: hidden; /* Ensures no floating elements escape the container */
+}
+
+/* Styling for the search form */
+.search-form {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.search-form input[type="text"] {
+    width: 70%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.search-form button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 13px;
+    cursor: pointer;
+}
+
+.search-form button:hover {
+    background-color: #0056b3;
+}
+
+/* Styling for search results */
+.content h2 {
+    color: #333;
+    text-align: center;
+}
+
+.content ul {
+    list-style: none;
+    padding: 0;
+}
+
+.content li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.content li:last-child {
+    border-bottom: none;
+}
+
+.content a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.content a:hover {
+    text-decoration: underline;
+}
+.item p.price {
+    color: #007bff;
+    font-weight: bold;
+    font-size: 18px;
+}
+.navbar {
+    background-color: #134746;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.navbar a {
+    float: right;
+    color: #ffffff;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.navbar a:hover {
+    background-color: #ffbf69;
+    color: #ffffff;
+}
+
+.navbar a.active {
+    background-color: #ff9f1c;
+    color: #ffffff;
+}
+.errormsg {
+    color: #dc3545; /* Standard error color */
+}
+
+.review-container {
+    padding: 3px;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+  }
+.postItem-container {
+    display: flex;
+    justify-content: center;
+}
+
+.postItem-form {
+    text-align: left;
+    margin: 0 auto;
+}
+.content form input{
+    background-color:#ebebeb;
+    width: 300px;
+    padding: 10px;
+    border:none;
+    border-radius: 5px;
+    margin:5px;
+}
+.content{
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    text-align:center;
+    margin:auto;
+    width: 95%;
+}
+.search-results{
+    display:inline-block;
+    margin-top: 30px;
+    width: 100%;
+}
+/* Button Styling */
+.button {
+    padding: 3px 30px;
+    background-color: #a2b4c7;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #cfd5dc;
+}
+
+.button-write-review {
+    background-color: #28a745; /* Green color for action buttons */
+}
+
+.button-write-review:hover {
+    background-color: #1e6b34;
+}
+
+.button-view-reviews {
+    background-color: #ff9f1c; /* Orange color for neutral informative buttons */
+}
+
+.button-view-reviews:hover {
+    background-color: #e68a00;
+}
+
