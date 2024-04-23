@@ -62,8 +62,8 @@ require("phase_1/dbconnect.php"); // Make sure this path matches your project st
                             echo "</a> - " . $row['description'] . " ($" . $row['price'] . ")</div>";
 
                             echo "<div class='right-column'>
-                                <a href='reviewitem.php?itemId=" . $row['itemId'] . "' class='button'>Write a review</a>
-                                <a href='seller.php?postedBy=" . $row['postedBy'] . "' class='button'>View seller</a>
+                                <a href='reviewitem.php?itemId=" . $row['itemId'] . "' class='button--11'>Write a review</a>
+                                <a href='seller.php?postedBy=" . $row['postedBy'] . "' class='button--11'>View seller</a>
                                 </div></div><hr>";
                         }
                         echo "</ul>";
