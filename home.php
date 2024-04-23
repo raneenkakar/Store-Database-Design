@@ -16,22 +16,29 @@ require("phase_1/dbconnect.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome Aboard!</title>
+    <title>Search for an Item</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <h1>Hello,  <?php echo $_SESSION["firstName"]?>! </h1>
-        </header>
-        <main class="main-content">
-            <p>Glad to see you in our community! You've successfully signed in.</p>
+    <div class="container-main">
+        <div class="navbar">
+            <a href="home.php">Search</a>
+            <a href="postitem.php">Post</a>
             <form action="phase_1/logout.php" method="post">
-                <button type="submit" class="btn-logout">Sign Out</button>
+                <button type="submit" class= "button-3">Sign Out</button>                
             </form>
-            <hr>
+        </div>
+        <div class="content">
+            <p>
+                Logged in as
+                <strong>
+                    <?php echo $_SESSION['firstName']; ?>
+                </strong>
+            </p>
             <h2>Search for an item</h2>
+            <hr>
+            
             <div class="search-form">
                 <form action="search.php" method="post">
                     <select id="category" name="category" required>
@@ -46,18 +53,10 @@ require("phase_1/dbconnect.php");
                         }
                         ?>
                     </select>
-                    <button type="submit" name="submit" class="button">🔎</button>
+                    <button type="submit" name="submit" style="width:50px; font-size: 14px;">🔎 </button>
                 </form>
             </div>
             <br>
-            <h2>Search for a seller</h2>
-            <div class="search-form">
-                <form action="seller.php" method="get">
-                    <input type="text" name="seller" placeholder="Enter username">
-                    <button type="submit" name="submit" class="button">🔎</button>
-                </form>
-            </div>
         </main>
     </div>
 </body>
-</html>

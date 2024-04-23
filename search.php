@@ -27,7 +27,7 @@ require("phase_1/dbconnect.php"); // Make sure this path matches your project st
             <a href="home.php" class="active">Search</a>
             <a href="postitem.php">Post Item</a>
             <form action="phase_1/logout.php" method="post">
-                <button type="submit" class="button-3">Log out</button>
+                <button type="submit" class="button-3">Sign Out</button>
             </form>
         </div>
 
@@ -35,7 +35,7 @@ require("phase_1/dbconnect.php"); // Make sure this path matches your project st
             <h2>Find Items</h2>
             <form action="search.php" method="post" class="search-form">
                 <input type="text" name="category" placeholder="Enter category (e.g., Electronics)" required>
-                <button type="submit" class="button">Search</button>
+                <button type="submit" class="button-3">Search</button>
             </form>
 
             <?php
