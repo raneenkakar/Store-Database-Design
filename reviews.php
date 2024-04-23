@@ -54,20 +54,17 @@ if (isset($_GET["itemId"])){
                 }
 
                 $stmt = $conn->prepare("SELECT * FROM item WHERE itemId = ?");
-                $stmt->bind_param("i", $itemId);
+                $stmt->bind_param("s", $itemId);
                 $stmt->execute();
                 $itemResult = $stmt->get_result();
-                $itemRow = $itemResult->fetch_assoc();
+                $itemRow = mysqli_fetch_assoc($itemResult);
 
-                $stmt2 = $conn->prepare("SELECT * FROM review WHERE forItem = ? ORDER BY reviewDate DESC");
-                $stmt2->bind_param("i", $itemId);
+                $stmt2 = $conn->prepare("SELECT * FROM review WHERE forItem = ? ORDER BY reviewDate DESC");                                   
+                $stmt2->bind_param("s", $itemRow['itemId']);
                 $stmt2->execute();
-                if (!$stmt->execute()) {
-                    die("Query failed: " . $conn->error);
-                }
-                
                 $reviewResult = $stmt2->get_result();
-                $numReviews = $reviewResult->num_rows;
+                $numReviews = mysqli_num_rows($reviewResult);
+
                 
 
                 echo "<h2>".$itemRow['title']." (" . $numReviews . " review" . ($numReviews == 1 ? "" : "s") . ")</h2>
