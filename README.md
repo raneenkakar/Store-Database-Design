@@ -13,8 +13,8 @@
 - Implemented rigorous input validation mechanisms to prevent SQL injection vulnerabilities.
 - Documented Phase 1 progress through comprehensive video recording.
 - I did designing portion of our phase 2.
-- Testing both phases.
-
+- Testing both phases.Also made sure,  a user can ONLY write one review per item.
+  
 **Ali:**
 - Implement phase 2 functionality such as all the reviews functionality and items
 - Update the databse 
