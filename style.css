@@ -434,6 +434,59 @@ h2 {
 
 
 /* Styling for search results */
+.item-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.left-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.left-column a {
+    font-size: 18px;
+    color: #2874A6;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.left-column a:hover {
+    text-decoration: underline;
+}
+
+.right-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.button--11 {
+    padding: 8px 16px;
+    background-color: #4CAF50; 
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.button--11:hover {
+    background-color: #45a049; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 .content {
     background-color: #f0faff; 
     padding: 30px; 
@@ -571,4 +624,3 @@ h2 {
 .button-view-reviews:hover {
     background-color: #e68a00;
 }
-
