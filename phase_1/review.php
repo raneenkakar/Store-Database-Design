@@ -15,6 +15,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["itemId"], $_POST["rema
     $remark = $_POST["remark"];
     $score = $_POST["score"];
 
+    // Check if the user has already reviewed this item
+    $checkReviewQuery = "SELECT COUNT(*) FROM review WHERE writtenBy = ? AND forItem = ?";
+    $checkStmt = $conn->prepare($checkReviewQuery);
+    $checkStmt->bind_param("si", $username, $itemId);
+    $checkStmt->execute();
+    $checkStmt->bind_result($reviewExists);
+    $checkStmt->fetch();
+    $checkStmt->close();
+
+    if ($reviewExists > 0) {
+        header("Location: ../reviews.php?itemId=$itemId&error=alreadyreviewed");
+        exit();
+    }
+
     // Check for user's review count on the current day
     $query = "SELECT COUNT(*) FROM review WHERE writtenBy = ? AND DATE(reviewDate) = CURDATE()";
     $stmt = $conn->prepare($query);
@@ -44,10 +58,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["itemId"], $_POST["rema
     }
 
     // Insert review into database
-    $query = "INSERT INTO review (remark, score, writtenBy, forItem) VALUES (?, ?, ?, ?)";
+    $query = "INSERT INTO review (remark, score, writtenBy, forItem, reviewDate) VALUES (?, ?, ?, ?, NOW())";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("sssi", $remark, $score, $username, $itemId);
-
     if ($stmt->execute()) {
         header("Location: ../reviews.php?itemId=$itemId&error=none");
         exit();
@@ -58,4 +71,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["itemId"], $_POST["rema
     header("Location: ../home.php");
     exit();
 }
-?>

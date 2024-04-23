@@ -50,6 +50,8 @@ if (isset($_GET["itemId"])){
                         echo "<p class='errormsg'>Unable to review item. You reached the limit of 3 reviews per day.</p>";
                     } elseif($_GET["error"] == "sameuser"){
                         echo "<p class='errormsg'>Unable to review your own listing.</p>";
+                    } elseif($_GET["error"] == "alreadyreviewed"){
+                        echo "<p class='errormsg'>You have already reviewed this item.</p>";
                     }
                 }
 
