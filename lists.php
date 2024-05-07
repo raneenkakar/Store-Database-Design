@@ -39,12 +39,6 @@ require("phase_1/dbconnect.php");
                         <option value="4">4-Items posted by user X with only "excellent" or "good" reviews" </option>
                         <option value="5">5- Users whose items never gained 3 or more excellent reviews</option>  
                         <option value="6">6-Users who posted some reviews, but each of them is "poor" </option>
-                        
-                       
-
-
-
-
                     </select>
                     <button type="submit" name="submit" class="button" style="width:50px; font-size: 14px; ">🔎</button>
                 </form>
@@ -64,21 +58,17 @@ require("phase_1/dbconnect.php");
                                 include("2_ExellentOrGoodReview.php");
                                 break;      
                         case "3": 
-                             include("3_PostMostItems.php"); // Assuming the new script is saved as `specificDateItems.php`
+                             include("3_PostMostItems.php"); 
                             break;
                         case "4":   
-                                include("4_usersCommonFavorites.php");
+                                include("4_usersCommonFavorites.php"); 
                                 break; 
                         case "5": 
                                 include("5_noExcellentItems.php");
                                 break;
                         case "6": 
-                                include("6_PoorReviewsOnly.php"); // Assuming the new script is saved as `specificDateItems.php`
+                                include("6_PoorReviewsOnly.php"); 
                                break;
-                        
-                         
-                    
-
                     }
                 }
                 

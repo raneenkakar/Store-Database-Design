@@ -7,7 +7,7 @@ if (!isset($_SESSION["username"])) {
     exit();
 }
 
-require("procedures/dbconnect.php");
+require("phase_1/dbconnect.php");
 
 // Retrieve selected user from POST data
 $selected_user = isset($_POST['selected_user']) ? $_POST['selected_user'] : '';
@@ -50,7 +50,7 @@ $result = $stmt->get_result();
             <a href="home.php">Search</a>
             <a href="postitem.php">Post</a>
             <a href="lists.php">Lists</a>
-            <form action="procedures/logout.php" method="post">
+            <form action="phase_1/logout.php" method="post">
                 <button type="submit" class="button-3">Log out</button>
             </form>
         </div>

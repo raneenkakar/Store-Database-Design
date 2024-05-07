@@ -7,7 +7,7 @@ if (!isset($_SESSION["username"])) {
     exit();
 }
 
-require("procedures/dbconnect.php");
+require("phase_1/dbconnect.php");
 
 // Initialize variables for selected users
 $user_x = isset($_POST['user_x']) ? $_POST['user_x'] : null;
@@ -50,7 +50,7 @@ $users = $user_query->fetch_all(MYSQLI_ASSOC);
             <a href="home.php">Search</a>
             <a href="postitem.php">Post</a>
             <a class="active" href="lists.php">Lists</a>
-            <form action="procedures/logout.php" method="post">
+            <form action="phase_1/logout.php" method="post">
                 <button type="submit" class="button-3">Log out</button>                
             </form>
         </div>

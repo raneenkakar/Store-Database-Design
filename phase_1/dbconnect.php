@@ -5,7 +5,7 @@
 // In order to open phpmyadmin, go to your browser and type in localhost/phpmyadmin
 $servername = "localhost";
 $username = "root";
-$password = "Aileen";
+$password = "bingo";
 $dbname = "comp440";
 
 // Create connection
