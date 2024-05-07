@@ -35,6 +35,10 @@ require("phase_1/dbconnect.php");
                         <option value="" disabled selected>Select a special case</option>
                         <option value="1">1- Most expensive items in each category</option>
                         <option value="2">5- Users whose items never gained 3 or more excellent reviews</option>  
+                        <option value="3">3-Users who posted the most items </option>
+                        <option value="6">6-Users who posted some reviews, but each of them is "poor" </option>
+
+
                     </select>
                     <button type="submit" name="submit" class="button" style="width:50px; font-size: 14px; ">🔎</button>
                 </form>
@@ -53,6 +57,13 @@ require("phase_1/dbconnect.php");
                         case "2": 
                             include("5_noExcellentItems.php");
                             break;
+                            case "3": 
+                             include("3_PostMostItems.php"); // Assuming the new script is saved as `specificDateItems.php`
+                            break;
+                            case "6": 
+                                include("6_PoorReviewsOnly.php"); // Assuming the new script is saved as `specificDateItems.php`
+                               break;
+
                     }
                 }
                 
