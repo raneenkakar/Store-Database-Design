@@ -19,7 +19,7 @@ $result = $stmt->get_result();
 $row = $result->fetch_assoc();
 
 if ($row['count'] >= 3) {
-    echo "You have already posted 3 items today. Please try again tomorrow.";
+    echo "You have already posted 2 items today. Please try again tomorrow.";
     exit();
 }
 

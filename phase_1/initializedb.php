@@ -67,9 +67,10 @@ if ($conn->query($itemTable) === false) {
 
 // SQL statement to create the 'favorite' table
 $favoriteTable = "CREATE TABLE IF NOT EXISTS favorite (
-    buyer VARCHAR(255) NOT NULL,
-    seller VARCHAR(255) NOT NULL,
+    favoriteId INT(10) AUTO_INCREMENT PRIMARY KEY,
+    buyer VARCHAR(32) NOT NULL,
     FOREIGN KEY (buyer) REFERENCES user(username),
+    seller VARCHAR(32) NOT NULL,
     FOREIGN KEY (seller) REFERENCES user(username));";
 
 // Execute the SQL statement and check if it was successful
@@ -119,6 +120,15 @@ $queries = array(
         ('Coffee Table', 'Modern coffee table made from solid wood', 'Furniture', '150.00', CURDATE(), 'Jane4'),
         ('Mountain Bike', 'Mountain bike with 21 speeds and dual suspension', 'Sporting Goods', '350.00', CURDATE(), 'Mathew5'),
         ('OLED TV', '55 inch OLED TV with 4K resolution and high dynamic range', 'Electronics', '1200.00', CURDATE(), 'Alice6')",
+
+    // Insert favorites into the 'favorite' table
+    "INSERT INTO favorite (buyer, seller) VALUES
+        ('Ali1', 'Raneen2'), ('Ali1', 'Sheema3'), ('Ali1', 'Jane4'), ('Ali1', 'Mathew5'), ('Ali1', 'Alice6'),
+        ('Raneen2', 'Ali1'), ('Raneen2', 'Sheema3'), ('Raneen2', 'Jane4'), ('Raneen2', 'Mathew5'),
+        ('Sheema3', 'Ali1'), ('Sheema3', 'Raneen2'), ('Sheema3', 'Jane4'), ('Sheema3', 'Mathew5'),
+        ('Jane4', 'Ali1'), ('Jane4', 'Raneen2'), ('Jane4', 'Sheema3'), ('Jane4', 'Mathew5'),
+        ('Mathew5', 'Ali1'), ('Mathew5', 'Raneen2'), ('Mathew5', 'Sheema3'), ('Mathew5', 'Jane4'),
+        ('Alice6', 'Ali1'), ('Alice6', 'Raneen2'), ('Alice6', 'Sheema3'), ('Alice6', 'Jane4')",
 
     // Insert reviews into the 'review' table
     "INSERT INTO review(remark, score, reviewDate, writtenBy, forItem) VALUES

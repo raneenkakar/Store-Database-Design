@@ -34,7 +34,7 @@ if (isset($_GET["itemId"])){
         <a class="active" href="home.php">Search</a>
             <a href="home.php">Search</a>
             <a href="phase_1/postitem.php">Post</a>
-            <!-- Removed link to lists.php since you do not use it -->
+            <a href="lists.php">Lists</a>
             <form action="phase_1/logout.php" method="post">
                 <button type="submit" class="button-3">Sign Out</button>                
             </form>

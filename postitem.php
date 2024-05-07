@@ -31,7 +31,7 @@ if (isset($_GET['error']) && $_GET['error'] == 'reachedlimit') {
         <div class="navbar">
             <a href="home.php">Search</a>
             <a class="active" href="postitem.php">Post</a>
-            <!-- Assuming you don't need the lists link as per your requirement -->
+            <a href="lists.php">Lists</a>
             <form action="phase_1/logout.php" method="post">
                 <button type="submit" class="button-3">Sign Out</button>                
             </form>
