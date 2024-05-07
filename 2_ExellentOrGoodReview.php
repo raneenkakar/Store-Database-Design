@@ -1,11 +1,4 @@
 <?php
-session_start();
-
-// Redirect to the login page if the user isn't logged in
-if (!isset($_SESSION["username"])) {
-    header("Location: index.php?error=invalidsession");
-    exit();
-}
 
 require("phase_1/dbconnect.php");
 
@@ -45,19 +38,8 @@ $result = $stmt->get_result();
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 </head>
 <body>
-    <div class="container-main">
-        <div class="navbar">
-            <a href="home.php">Search</a>
-            <a href="postitem.php">Post</a>
-            <a href="lists.php">Lists</a>
-            <form action="phase_1/logout.php" method="post">
-                <button type="submit" class="button-3">Log out</button>
-            </form>
-        </div>
-
         <div class="content">
             <h2>Items Posted by <?php echo htmlspecialchars($selected_user, ENT_QUOTES, 'UTF-8'); ?> with Only 'Excellent' or 'Good' Reviews</h2>
-
             <div class="list-container">
                 <?php if ($result->num_rows > 0): ?>
                     <table>
@@ -81,6 +63,5 @@ $result = $stmt->get_result();
                 <?php endif; ?>
             </div>
         </div>
-    </div>
 </body>
 </html>

@@ -1,11 +1,4 @@
 <?php
-session_start();
-
-// Check if the user is logged in; if not, redirect to the login page
-if (!isset($_SESSION["username"])) {
-    header("Location: index.php?error=invalidsession");
-    exit();
-}
 
 require("phase_1/dbconnect.php");
 
@@ -45,16 +38,6 @@ $users = $user_query->fetch_all(MYSQLI_ASSOC);
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 </head>
 <body>
-    <div class="container-main">
-        <div class="navbar">
-            <a href="home.php">Search</a>
-            <a href="postitem.php">Post</a>
-            <a class="active" href="lists.php">Lists</a>
-            <form action="phase_1/logout.php" method="post">
-                <button type="submit" class="button-3">Log out</button>                
-            </form>
-        </div>
-
         <div class="content">
             <h2>Find Users Favorited by Both User X and User Y</h2>
 
@@ -102,6 +85,5 @@ $users = $user_query->fetch_all(MYSQLI_ASSOC);
                 <?php endif; ?>
             </div>
         </div>
-    </div>
 </body>
 </html>
