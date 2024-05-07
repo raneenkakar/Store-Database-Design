@@ -624,3 +624,47 @@ h2 {
 .button-view-reviews:hover {
     background-color: #e68a00;
 }
+
+.list-container {
+    display: inline-block;
+    background-color: #f0f8ff;
+    border-radius: 10px; 
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1); 
+    padding: 25px; 
+    width: 80%;
+    max-width: 600px;
+    border: 2px solid #cbe4f9; 
+}
+
+.search-results{
+    display:inline-block;
+    margin-top: 30px;
+    width: 100%;
+}
+
+.table-header {
+    background-color: #87cefa; 
+    color: #ffffff;
+    padding: 10px 20px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 8px 8px 0 0;
+}
+
+.table-row {
+    border-bottom: 1px solid #add8e6; 
+    text-align: center;
+    padding: 20px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.table-row td {
+    padding: 10px;
+    text-align: center;
+    color: #1e90ff;
+    font-size: 16px;
+}
+
+.table-row:hover {
+    background-color: #d0f7ff; 
+}  

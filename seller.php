@@ -41,6 +41,7 @@ if (empty($seller)) {
             <a href="home.php">Search</a>
             <a href="postitem.php">Post</a>
             <a class="active" href="seller.php">Seller</a>
+            <a href="lists.php">Lists</a>
             <form action="logout.php" method="post">
                 <button type="submit" class="button-3">Log out</button>                
             </form>

@@ -26,6 +26,7 @@ require("phase_1/dbconnect.php"); // Make sure this path matches your project st
         <div class="navbar">
             <a href="home.php" class="active">Search</a>
             <a href="postitem.php">Post Item</a>
+            <a href="lists.php">Lists</a>
             <form action="phase_1/logout.php" method="post">
                 <button type="submit" class="button-3">Sign Out</button>
             </form>
