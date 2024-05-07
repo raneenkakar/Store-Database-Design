@@ -1,111 +1,93 @@
-<?php
-require("phase_1/dbconnect.php");
-
-// Initialize variables for selected users
-$user_x = isset($_POST['user_x']) ? $_POST['user_x'] : null;
-$user_y = isset($_POST['user_y']) ? $_POST['user_y'] : null;
-
-$result = null;
-$common_favorites = [];
-
-// If both User X and User Y are provided, execute the query to find common favorites
-if ($user_x && $user_y) {
-    $stmt = $conn->prepare("
-        SELECT seller 
-        FROM favorite 
-        WHERE buyer = ? 
-        INTERSECT 
-        SELECT seller 
-        FROM favorite 
-        WHERE buyer = ?
-    "); // This part finds common favorites
-    $stmt->bind_param("ss", $user_x, $user_y); 
-    $stmt->execute(); 
-    $result = $stmt->get_result(); 
-
-    // Fetch common favorites into an array for use in the dropdown
-    if ($result && $result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $common_favorites[] = $row["seller"]; // This represents the common favorite users, also referred to as "user C"
-        }
-    }
+<?php 
+session_start();
+if (!isset($_SESSION["username"])){
+    header("Location: index.php?error=invalidsession");
+    exit();
 }
 
-// Fetch the list of distinct users for the dropdown
-$user_query = $conn->query("SELECT DISTINCT buyer FROM favorite");
-$users = $user_query->fetch_all(MYSQLI_ASSOC); 
+require("phase_1/dbconnect.php");
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head>    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Common Favorites of Users X and Y</title>
+    <title>Search Results</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .content {
+            background-color: #f0faff; 
+            padding: 30px; 
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 70%; 
+            max-width: 800px; 
+            margin: 30px auto; 
+            font-size: 16px; 
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            text-align: center;
+            padding: 8px;
+            border-bottom: 1px solid #ccc;
+        }
+        th {
+            background-color: white;
+        }
+    </style>
 </head>
 <body>
-    <div class="content">
-        <h2>Find Users Favorited by Both User X and User Y</h2>
-
-        <div class="search-form">
-            <form action="lists.php" method="post">
-                <!-- Dropdown to select User X -->
-                <label for="user_x">Select User X:</label>
-                <select id="user_x" name="user_x" required>
-                    <option value="" disabled selected>Select User X</option>
-                    <?php foreach ($users as $user): ?>
-                        <option value="<?php echo htmlspecialchars($user['buyer'], ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlspecialchars($user['buyer'], ENT_QUOTES, 'UTF-8'); ?></option>
-                    <?php endforeach; ?>
-                </select>
-
-                <!-- Dropdown to select User Y -->
-                <label for="user_y">Select User Y:</label>
-                <select id="user_y" name="user_y" required>
-                    <option value="" disabled selected>Select User Y</option>
-                    <?php foreach ($users as $user): ?>
-                        <option value="<?php echo htmlspecialchars($user['buyer'], ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlspecialchars($user['buyer'], ENT_QUOTES, 'UTF-8'); ?></option>
-                    <?php endforeach; ?>
-                </select>
-
-                <button type="submit" class="button">Find Common Favorites</button>
+    <div class="container-main">
+       <div class="navbar">
+            <a href="home.php">Search</a>
+            <a href="postitem.php">Post</a>
+            <a href="lists.php">Lists</a>
+            <form action="phase_1/logout.php" method="post">
+                <button type="submit" class= "button-3">Sign Out</button>                
             </form>
         </div>
-
-        <!-- If there are common favorites, show them in a dropdown and a table -->
-        <div class="list-container">
-            <?php if ($common_favorites): ?>
-                <!-- This section is where the common favorites are displayed -->
-                <h3>Users Favorited by Both <?php echo htmlspecialchars($user_x, ENT_QUOTES, 'UTF-8'); ?> and <?php echo htmlspecialchars($user_y, ENT_QUOTES, 'UTF-8'); ?></h3>
-                <!-- New dropdown menu with common favorites  -->
-                <label for="common_users">Select a Common Favorite:</label>
-                <select id="common_users" name="common_users">
-                    <option value="" disabled selected>Select Common Favorite</option>
-                    <?php foreach ($common_favorites as $common_user): ?>
-                        <option value="<?php echo htmlspecialchars($common_user, ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlspecialchars($common_user, ENT_QUOTES, 'UTF-8'); ?></option>
-                    <?php endforeach; ?>
-                </select>
-
-               
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Seller</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($common_favorites as $common_user): ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($common_user, ENT_QUOTES, 'UTF-8'); ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            <?php else: ?>
-                <!-- Message if no common favorites are found -->
-                <p>No common favorites found for <?php echo htmlspecialchars($user_x, ENT_QUOTES, 'UTF-8'); ?> and <?php echo htmlspecialchars($user_y, ENT_QUOTES, 'UTF-8'); ?>.</p>
-            <?php endif; ?>
+        <div class="content">
+          <div class='list-container'>
+              <h3>List the other users who are favorited by both users X, and Y.</h3>
+              <h2></h2>
+              <?php
+                $category1 = $_POST['category1'];
+                $category2 = $_POST['category2'];
+                $stmt = $conn->prepare("SELECT X.buyer AS buyer1, Y.buyer AS buyer2, X.seller
+                FROM favorite AS X, favorite AS Y 
+                WHERE X.buyer = ? AND Y.buyer = ?
+                AND X.buyer <> Y.buyer 
+                AND X.seller = Y.seller");
+                $stmt->bind_param("ss", $category1, $category2);
+                $stmt->execute();
+                $result = $stmt->get_result();
+              ?>
+             <table>
+                <tr>
+                    <th>Buyer 1</th>
+                    <th>Buyer 2</th>
+                    <th>Seller</th>
+                </tr>
+                <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+                    <tr>
+                        <td><?php echo $row["buyer1"]; ?></td>
+                        <td><?php echo $row["buyer2"]; ?></td>
+                        <td><?php echo $row["seller"]; ?></td>
+                    </tr>
+                <?php } ?>
+             </table>
+            </div>
         </div>
     </div>
 </body>

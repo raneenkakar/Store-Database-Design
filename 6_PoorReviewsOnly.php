@@ -7,6 +7,37 @@
     <title>Users With Only Poor Reviews</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .content {
+            background-color: #f0faff; 
+            padding: 30px; 
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 70%; 
+            max-width: 800px; 
+            margin: 30px auto; 
+            font-size: 16px; 
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            text-align: center;
+            padding: 8px;
+            border-bottom: 1px solid #ccc;
+        }
+        th {
+            background-color: white;
+        }
+    </style>
 </head>
 <body>
     <?php
@@ -39,7 +70,7 @@
         <div class='content'>
             <h2>Users Who Posted Only 'Poor' Reviews</h2>
             <table>
-                <tr class='table-header'>
+                <tr>
                     <th>User</th>
                     <th>Score Given</th>
                     <th>Item Reviewed</th>
@@ -52,7 +83,7 @@
         $itemResult = $stmt->get_result();
         $item = mysqli_fetch_assoc($itemResult);
         
-        echo "  <tr class='table-row'>
+        echo "  <tr>
                     <td>" . htmlspecialchars($row["writtenBy"]) . "</td>
                     <td>" . htmlspecialchars($row["score"]) . "</td>
                     <td>" . htmlspecialchars($item['title']) . "</td>
