@@ -51,11 +51,7 @@ if (isset($_GET['error']) && $_GET['error'] == 'reachedlimit') {
                 <textarea id="description" name="description" required></textarea><br><br>
 
                 <label for="category">Category:</label>
-                <select id="category" name="category" required>
-                    <option value="Electronics">Electronics</option>
-                    <option value="Furniture">Furniture</option>
-                    <option value="Sporting Goods">Sporting Goods</option>
-                </select><br><br>
+                <input type="text" id="category" name="category" placeholder="e.g., Electronics, Apple, iPhone" required><br><br>
 
                 <label for="price">Price ($):</label>
                 <input type="number" id="price" name="price" step="0.01" required><br><br>
