@@ -40,38 +40,38 @@ require("phase_1/dbconnect.php"); // Make sure this path matches your project st
             </form>
 
             <?php
-                if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["category"])) {
-                    $category = $_POST["category"];
-                    $stmt = $conn->prepare("SELECT * FROM item WHERE category LIKE ?");
-                    $category = "%$category%";
-                    $stmt->bind_param("s", $category);
-                    $stmt->execute();
-                    $itemResult = $stmt->get_result();
-
-                    if ($itemResult->num_rows > 0) {
-                        echo "<h3>Results:</h3><ul>";
-                        while ($row = $itemResult->fetch_assoc()) {
-                            $stmt2 = $conn->prepare("SELECT * FROM review WHERE forItem = ?");
-                            $stmt2->bind_param("i", $row['itemId']);
-                            $stmt2->execute();
-                            $reviewResult = $stmt2->get_result();
-                            $numReviews = $reviewResult->num_rows;
-
-                            echo "<div class='item-container'>
-                                <div class='left-column'><a href='reviews.php?itemId=" . $row['itemId'] . "'>" . $row['title'] . " (";
-                            echo $numReviews > 0 ? $numReviews . " reviews)" : "No reviews)";
-                            echo "</a> - " . $row['description'] . " ($" . $row['price'] . ")</div>";
-
-                            echo "<div class='right-column'>
-                                <a href='reviewitem.php?itemId=" . $row['itemId'] . "' class='button--11'>Write a review</a>
-                                <a href='seller.php?postedBy=" . $row['postedBy'] . "' class='button--11'>View seller</a>
-                                </div></div><hr>";
-                        }
-                        echo "</ul>";
-                    } else {
-                        echo "<p>No items found in the category '$category'</p>";
+               if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["category"])) {
+                $category = trim($_POST["category"]); // Trim whitespace
+                $searchPattern = "%" . implode('%', explode(',', $category)) . "%"; // Create a pattern for LIKE clause
+                $stmt = $conn->prepare("SELECT * FROM item WHERE category LIKE ?");
+                $stmt->bind_param("s", $searchPattern);
+                $stmt->execute();
+                $itemResult = $stmt->get_result();
+            
+                if ($itemResult->num_rows > 0) {
+                    echo "<h3>Results:</h3><ul>";
+                    while ($row = $itemResult->fetch_assoc()) {
+                        $stmt2 = $conn->prepare("SELECT * FROM review WHERE forItem = ?");
+                        $stmt2->bind_param("i", $row['itemId']);
+                        $stmt2->execute();
+                        $reviewResult = $stmt2->get_result();
+                        $numReviews = $reviewResult->num_rows;
+            
+                        echo "<div class='item-container'>
+                            <div class='left-column'><a href='reviews.php?itemId=" . $row['itemId'] . "'>" . $row['title'] . " (";
+                        echo $numReviews > 0 ? $numReviews . " reviews)" : "No reviews)";
+                        echo "</a> - " . $row['description'] . " ($" . $row['price'] . ")</div>";
+            
+                        echo "<div class='right-column'>
+                            <a href='reviewitem.php?itemId=" . $row['itemId'] . "' class='button--11'>Write a review</a>
+                            <a href='seller.php?postedBy=" . $row['postedBy'] . "' class='button--11'>View seller</a>
+                            </div></div><hr>";
                     }
+                    echo "</ul>";
+                } else {
+                    echo "<p>No items found in the category '$category'</p>";
                 }
+            }            
             ?>
         </div>
     </div>
