@@ -44,18 +44,19 @@
 
     // Query to find users whose items never gained 3 or more excellent reviews
     $sql = " SELECT i1.postedBy
-        FROM item i1
-        LEFT JOIN review r ON i1.itemId = r.forItem
-        WHERE i1.postedBy NOT IN (
-            SELECT i2.postedBy
-            FROM item i2
-            JOIN review r2 ON i2.itemId = r2.forItem
-            WHERE r2.score = 'Excellent'
-            GROUP BY i2.postedBy
-            HAVING COUNT(CASE WHEN r2.score = 'Excellent' THEN 1 END) >= 3
-        )
-        GROUP BY i1.postedBy
-    ";
+    FROM item i1
+    LEFT JOIN review r ON i1.itemId = r.forItem  /* Join 'item' table and 'review' table where the item IDs match*/
+    WHERE i1.postedBy NOT IN (  /*Select postedBy who are not in the following subquery*/
+        SELECT i2.postedBy
+        FROM item i2
+        JOIN review r2 ON i2.itemId = r2.forItem  /* Join 'item' and 'review' for a second instance to check conditions on reviews*/
+        WHERE r2.score = 'Excellent'  /* Filter the results to include only those reviews with an 'Excellent' score*/
+        GROUP BY i2.postedBy  /* Group the results by the person who posted the item*/
+        HAVING COUNT(CASE WHEN r2.score = 'Excellent' THEN 1 END) >= 3  /* Having clause to filter those who have 3 or more Excellent scores*/
+    )
+    GROUP BY i1.postedBy  /* Group the results by the poster to avoid duplicates in the main query result*/
+";
+
 
     $result = mysqli_query($conn, $sql);
     if (!$result) {
