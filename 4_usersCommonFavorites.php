@@ -62,16 +62,21 @@ require("phase_1/dbconnect.php");
               <h3>List the other users who are favorited by both users X, and Y.</h3>
               <h2></h2>
               <?php
-                $category1 = $_POST['category1'];
-                $category2 = $_POST['category2'];
-                $stmt = $conn->prepare("SELECT X.buyer AS buyer1, Y.buyer AS buyer2, X.seller
-                FROM favorite AS X, favorite AS Y 
-                WHERE X.buyer = ? AND Y.buyer = ?
-                AND X.buyer <> Y.buyer 
-                AND X.seller = Y.seller");
-                $stmt->bind_param("ss", $category1, $category2);
-                $stmt->execute();
-                $result = $stmt->get_result();
+              $category1 = $_POST['category1'];  // Retrieve 'category1' from POST data sent by the user/form
+              $category2 = $_POST['category2'];  // Retrieve 'category2' from POST data sent by the user/form
+              // Prepare an SQL statement to query the database
+             $stmt = $conn->prepare("SELECT X.buyer AS buyer1, Y.buyer AS buyer2, X.seller
+                           FROM favorite AS X, favorite AS Y 
+                           WHERE X.buyer = ? AND Y.buyer = ?
+                           AND X.buyer <> Y.buyer /* they both are not equal too*/
+                           AND X.seller = Y.seller");
+             // Bind the PHP variables to the placeholders in the SQL query
+             $stmt->bind_param("ss", $category1, $category2);  // 'ss' indicates that both parameters are strings
+             // Execute the prepared statement
+             $stmt->execute();
+             // Retrieve the result set from the executed statement
+             $result = $stmt->get_result();
+   
               ?>
              <table>
                 <tr>
