@@ -72,4 +72,3 @@ $jsonCategories = json_encode($categories);
     </script>
 </body>
 </html>
-
