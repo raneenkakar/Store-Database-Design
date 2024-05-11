@@ -1,67 +1,91 @@
-<?php
-
-require("phase_1/dbconnect.php");
-
-// Retrieve selected user from POST data
-$selected_user = isset($_POST['selected_user']) ? $_POST['selected_user'] : '';
-
-// Define SQL query to fetch items posted by user X with only "Excellent" or "Good" comments
-$sql = "
-SELECT i.title AS itemTitle, r.score AS commentScore
-FROM item i
-JOIN review r ON i.itemId = r.forItem
-WHERE i.postedBy = ?
-  AND r.score IN ('Excellent', 'Good')
-  AND NOT EXISTS (
-    SELECT 1
-    FROM review r2
-    WHERE r2.forItem = i.itemId
-      AND r2.score NOT IN ('Excellent', 'Good')
-  )
-GROUP BY i.itemId, r.score
-";
-
-// Prepare the SQL statement
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $selected_user);
-$stmt->execute();
-$result = $stmt->get_result();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Items with 'Excellent' or 'Good' Reviews</title>
+    <title>Items With Only Excellent or Good Reviews</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .content {
+            background-color: #f0faff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 70%;
+            max-width: 800px;
+            margin: 30px auto;
+            font-size: 16px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            text-align: center;
+            padding: 8px;
+            border-bottom: 1px solid #ccc;
+        }
+        th {
+            background-color: white;
+        }
+    </style>
 </head>
 <body>
-        <div class="content">
-            <h2>Items Posted by <?php echo htmlspecialchars($selected_user, ENT_QUOTES, 'UTF-8'); ?> with Only 'Excellent' or 'Good' Reviews</h2>
-            <div class="list-container">
-                <?php if ($result->num_rows > 0): ?>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Item</th>
-                                <th>Comment Score</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php while ($row = $result->fetch_assoc()): ?>
-                                <tr>
-                                    <td><?php echo htmlspecialchars($row['itemTitle'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                    <td><?php echo htmlspecialchars($row['commentScore'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                </tr>
-                            <?php endwhile; ?>
-                        </tbody>
-                    </table>
-                <?php else: ?>
-                    <p>No items found with only 'Excellent' or 'Good' comments.</p>
-                <?php endif; ?>
-            </div>
-        </div>
+    <?php
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    // Redirect to login page if the user is not logged in
+    if (!isset($_SESSION["username"])) {
+        header("Location: index.php?error=invalidsession");
+        exit();
+    }
+
+    require("phase_1/dbconnect.php");
+
+    // Query to find items that have only "Excellent" or "Good" reviews and no "Bad" or "Fair" reviews
+    $sql = "SELECT item.itemId, item.title, COUNT(review.score) as ReviewCount
+            FROM item
+            JOIN review ON item.itemId = review.forItem
+            GROUP BY item.itemId
+            HAVING SUM(review.score NOT IN ('Excellent', 'Good')) = 0";
+
+    $result = mysqli_query($conn, $sql);
+
+    if (!$result) {
+        die("<p class='error-message'>Error executing query: " . mysqli_error($conn) . "</p>");
+    }
+
+    echo "
+        <div class='content'>
+            <h2>Items With Only 'Excellent' or 'Good' Reviews</h2>
+            <table>
+                <tr>
+                    <th>Item ID</th>
+                    <th>Item Title</th>
+                    <th>Review Count</th>
+                </tr>";
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        echo "  <tr>
+                    <td>" . htmlspecialchars($row["itemId"]) . "</td>
+                    <td>" . htmlspecialchars($row["title"]) . "</td>
+                    <td>" . htmlspecialchars($row["ReviewCount"]) . "</td>
+                </tr>";
+    }
+
+    echo "</table></div>";
+
+    mysqli_close($conn);
+    ?>
 </body>
 </html>
