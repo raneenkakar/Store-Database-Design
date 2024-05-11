@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Top Item Posters</title>
+    <title>Top Item Posters on a Specific Date</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <style>
@@ -51,37 +51,35 @@
 
     require("phase_1/dbconnect.php");
 
-    $sql = "SELECT u.username, COUNT(*) AS num_items FROM user u
-            INNER JOIN item i ON u.username = i.postedBy
-            WHERE i.postDate >= '2022-05-01'
-            GROUP BY u.username
-            HAVING COUNT(*) = (
-                SELECT MAX(item_count) FROM (
-                    SELECT postedBy, COUNT(*) AS item_count
-                    FROM item
-                    WHERE postDate >= '2022-05-01'
-                    GROUP BY postedBy
-                ) subquery
-            )";
+    // Specific date hardcoded
+    $specificDate = '2024-04-01';
+    $sql = "SELECT postedBy, COUNT(*) AS num_items FROM item
+        WHERE postDate = ?
+        GROUP BY postedBy
+        ORDER BY num_items DESC"; 
 
-    $result = mysqli_query($conn, $sql);
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $specificDate);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if (!$result) {
-        echo "<p class='error-message'>Error executing query: " . mysqli_error($conn) . "</p>";
-        exit;
-    }
-    ?>
+       echo "<p class='error-message'>Error executing query: " . $conn->error . "</p>";
+       exit();
+    } 
+
+   ?>
     <div class='content'>
-        <h2>Users who posted the most number of items</h2>
+        <h2>Users who posted the most items on <?= htmlspecialchars($specificDate) ?></h2>
         <table>
             <tr>
                 <th>User</th>
                 <th>Number of Items Posted</th>
             </tr>
             <?php
-            while ($row = mysqli_fetch_assoc($result)) {
+            while ($row = $result->fetch_assoc()) {
                 echo "<tr>
-                          <td>" . htmlspecialchars($row["username"]) . "</td>
+                          <td>" . htmlspecialchars($row["postedBy"]) . "</td>
                           <td>" . htmlspecialchars($row["num_items"]) . "</td>
                       </tr>";
             }
