@@ -49,15 +49,16 @@ if ($conn->query($itemCategoryTable) === false) {
 
 // SQL statement to create the 'item' table
 $itemTable = "CREATE TABLE IF NOT EXISTS item (
-    itemId INT(10) AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(64) NOT NULL,
-    description TEXT(255),
-    category VARCHAR(64) NOT NULL,
-    price DECIMAL(10,2),
-    postDate DATE NOT NULL DEFAULT (CURRENT_DATE),
-    postedBy VARCHAR(255) NOT NULL,
-    FOREIGN KEY (postedBy) REFERENCES user(username),
-    FOREIGN KEY (category) REFERENCES itemCategory(category));";
+        itemId INT(10) AUTO_INCREMENT PRIMARY KEY,
+        title VARCHAR(64) NOT NULL,
+        description TEXT(255),
+        category VARCHAR(64) NOT NULL,
+        price DECIMAL(10,2),
+        postDate DATE NOT NULL,
+        postedBy VARCHAR(255) NOT NULL,
+        FOREIGN KEY (postedBy) REFERENCES user(username),
+        FOREIGN KEY (category) REFERENCES itemCategory(category)
+    );";
 
 // Execute the SQL statement and check if it was successful
 if ($conn->query($itemTable) === false) {
@@ -110,16 +111,21 @@ $queries = array(
     "INSERT INTO itemCategory(category) VALUES
         ('Electronics'),
         ('Furniture'),
-        ('Sporting Goods')",
+        ('Sporting Goods'),
+        ('Accesories')",
 
     // Insert items into the 'item' table
     "INSERT INTO item(title, description, category, price, postDate, postedBy) VALUES
-        ('iPhone 15 Pro', 'Latest iPhone with improved camera and battery life', 'Electronics', '500.00', CURDATE(), 'Ali1'),
-        ('AirPods Pro', 'High-quality wireless earbuds with active noise cancellation', 'Electronics', '249.00', CURDATE(), 'Raneen2'),
-        ('iPad', 'Powerful tablet with a vibrant display and long battery life', 'Electronics', '329.00', CURDATE(), 'Sheema3'),
-        ('Coffee Table', 'Modern coffee table made from solid wood', 'Furniture', '150.00', CURDATE(), 'Jane4'),
-        ('Mountain Bike', 'Mountain bike with 21 speeds and dual suspension', 'Sporting Goods', '350.00', CURDATE(), 'Mathew5'),
-        ('OLED TV', '55 inch OLED TV with 4K resolution and high dynamic range', 'Electronics', '1200.00', CURDATE(), 'Alice6')",
+       ('iPhone 15 Pro', 'Latest iPhone with improved camera and battery life', 'Electronics', '500.00', '2024-01-01', 'Ali1'),
+        ('AirPods Pro', 'High-quality wireless earbuds with active noise cancellation', 'Electronics', '249.00', '2024-01-02', 'Raneen2'),
+        ('iPad', 'Powerful tablet with a vibrant display and long battery life', 'Electronics', '329.00', '2024-02-03', 'Sheema3'),
+        ('Coffee Table', 'Modern coffee table made from solid wood', 'Furniture', '150.00', '2024-02-04', 'Jane4'),
+        ('Mountain Bike', 'Mountain bike with 21 speeds and dual suspension', 'Sporting Goods', '350.00', '2024-01-05', 'Mathew5'),
+        ('OLED TV', '55 inch OLED TV with 4K resolution and high dynamic range', 'Electronics', '1200.00', '2024-04-01', 'Alice6'),
+        ('Galaxy TV', '60 inch Galaxy TV with 4K resolution and high dynamic range', 'Electronics', '1500.00', '2024-04-01', 'Alice6'),
+        ('Rings', 'Beautiful colored red ring with three pieces', 'Accesories', '678.00', '2024-04-01', 'Sheema3'),
+        ('Bed', 'Comfiest Bed three pieces of pillows and cusion', 'Furniture', '155.00', '2024-04-01', 'Sheema3'),
+        ('Baseball', '1999 Baseball antique piece for homes', 'Sporting Goods', '934.00', '2024-04-01', 'Mathew5')",
 
     // Insert favorites into the 'favorite' table
     "INSERT INTO favorite (buyer, seller) VALUES
